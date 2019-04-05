@@ -1,16 +1,11 @@
 #include "CharInfo.hxx"
 
-#include "utils.hxx"
-
-#include "InfInt.hxx"
-
-#include <cstring>
 #include <stdexcept>
 
 using namespace pm;
 
 CharInfo::CharInfo(const std::string& str)
-	: counts(NUM_POSSIBILITIES, 0u), numChars(str.size()), numCombinations(0uLL)
+	: counts(NUM_POSSIBILITIES, 0u), numChars(0u), numCombinations(1uLL)
 {
 	for (char c : str)
 	{
@@ -18,7 +13,14 @@ CharInfo::CharInfo(const std::string& str)
 	}
 }
 
-void addChar(char c)
+CharInfo::CharInfo(const CharInfo& charInfo)
+	: counts(charInfo.counts), numChars(charInfo.numChars),
+	  numCombinations(charInfo.numCombinations)
+{
+
+}
+
+void CharInfo::addChar(char c)
 {
 	unsigned count = ++counts[hash(c)];
 	++numChars;
@@ -26,16 +28,29 @@ void addChar(char c)
 	numCombinations = numCombinations * numChars / count;
 }
 
-uint64_t CharInfo::calcNumCombinations() const
+void CharInfo::removeChar(char c)
 {
-	InfInt numCombinations = factorial(numChars);
+	unsigned& count = counts[hash(c)];
 
-	for (unsigned count : counts)
+	if (count == 0u)
 	{
-		numCombinations /= factorial(count);
+		throw std::runtime_error("Cannot remove char, already empty: " + c);
 	}
 
-	return numCombinations.toUnsignedLongLong();
+	numCombinations = numCombinations * count / numChars;
+
+	--count;
+	--numChars;
+}
+
+uint64_t CharInfo::getNumSubcombinations(char c) const
+{
+	return numCombinations * counts[hash(c)] / numChars;
+}
+
+char CharInfo::unhash(unsigned c) const
+{
+	return 'a' + c;
 }
 
 unsigned CharInfo::hash(char c) const
