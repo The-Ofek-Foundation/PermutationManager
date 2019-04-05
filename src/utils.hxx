@@ -1,12 +1,12 @@
 #ifndef PM_UTILS
 #define PM_UTILS
 
-#include "InfInt.h"
+#include "InfInt.hxx"
 #include <vector>
 
 namespace pm
 {
-	InfInt factorial(unsigned num)
+	inline InfInt factorial(unsigned num)
 	{
 		static std::vector<InfInt> factorials{"1"};
 
