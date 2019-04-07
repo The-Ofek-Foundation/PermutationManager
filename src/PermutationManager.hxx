@@ -18,7 +18,7 @@ namespace pm
 	// with ASCII, for example, with 256 possible characters, then this will run in
 	// text_length * 256, where the 256 does not affect the asymptotic running time.
 	// Meaning that an essay with 10,000 characters will take twice as long as an essay
-	// with 5,000 characters, not 4 times as long if it was quadratic.
+	// with 5,000 characters, not 4 times as long.
 	//
 	// The worst case of num_values² only occurs if all the values are distinct, and
 	// you are looking for an unlucky permutation.
@@ -38,6 +38,7 @@ namespace pm
 
 		// O(num_values * num_distinct_values) = Ω(num_values), O(num_values²)
 		InfInt getPermutationIndex(const std::vector<T>& permutation) const;
+		InfInt getPermutationIndex(const T* values, unsigned numValues) const;
 
 		inline InfInt getNumCombinations() const
 		{
@@ -104,12 +105,18 @@ namespace pm
 	template <typename T>
 	InfInt PermutationManager<T>::getPermutationIndex(const std::vector<T>& permutation) const
 	{
-		if (permutation.size() != valuesRepresentation.getNumValues())
+		return getPermutationIndex(&permutation[0u], permutation.size());
+	}
+
+	template <typename T>
+	InfInt PermutationManager<T>::getPermutationIndex(const T* values, unsigned numValues) const
+	{
+		if (numValues != valuesRepresentation.getNumValues())
 		{
 			throw std::runtime_error("Incorrect permutation length");
 		}
 
-		if (valuesRepresentation != PermutationRepresentation<T>(permutation))
+		if (PermutationRepresentation<T>(values, numValues) != valuesRepresentation)
 		{
 			throw std::runtime_error("Not valid permutation");
 		}
@@ -118,8 +125,10 @@ namespace pm
 		PermutationRepresentation<T> tempRep(valuesRepresentation);
 		InfInt permIndex = 0;
 
-		for (const T& value : permutation)
+		for (unsigned i = 0u; i < numValues; ++i)
 		{
+			const T& value = values[i];
+
 			for (const auto& representation : tempRep.getValueRepresentations())
 			{
 				if (representation.value == value)

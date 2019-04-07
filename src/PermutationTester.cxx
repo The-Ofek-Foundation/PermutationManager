@@ -40,7 +40,7 @@ int main()
 	}
 
 
-	PermutationManager<char> pm2("my name is jeffrey, what's yours?", strlen("my name is jeffrey, what's yours?"));
+	PermutationManager<char> pm2("     ',?aaeeeffhijmmnorrssstuwyyy", strlen("     ',?aaeeeffhijmmnorrssstuwyyy"));
 
 	std::cout << "Number of Unique Combinations: " << pm2.getNumCombinations() << "\n";
 
@@ -49,6 +49,11 @@ int main()
 	printPermutation(permutation);
 
 	std::cout << pm2.getPermutationIndex(permutation) << "\n";
+
+	InfInt spookyIndex = pm2.getPermutationIndex("my name is jeffrey, what's yours?", strlen("     ',?aaeeeffhijmmnorrssstuwyyy"));
+
+	std::cout << spookyIndex << ": ";
+	printPermutation(pm2.getPermutation(spookyIndex));
 
 	printPermutation(pm2.getRandomPermutation());
 

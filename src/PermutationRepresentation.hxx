@@ -55,12 +55,8 @@ namespace pm
 
 	template <typename T>
 	PermutationRepresentation<T>::PermutationRepresentation(const std::vector<T>& values)
-		: representations({}), indices({}), numValues(0u), numCombinations(1)
+	    : PermutationRepresentation(&values[0u], values.size())
 	{
-		for (const T& value : values)
-		{
-			addValue(value);
-		}
 	}
 
 	template <typename T>
