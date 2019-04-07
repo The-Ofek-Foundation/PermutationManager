@@ -21,7 +21,10 @@ namespace pm
 
 		PermutationRepresentation(const std::vector<T>& values); // Θ(num_values)
 		PermutationRepresentation(const T* values, unsigned numValues); // Θ(num_values)
-		PermutationRepresentation(const PermutationRepresentation<T>& pr); // Θ(num_unique_values)
+		PermutationRepresentation(const PermutationRepresentation<T>& pr); // Θ(num_distinct_values)
+
+		bool operator == (const PermutationRepresentation<T>& pr) const;
+		bool operator != (const PermutationRepresentation<T>& pr) const;
 
 		void addValue(const T& value); // Θ(1)
 		void removeValue(const T& value); // Θ(1)
@@ -36,7 +39,7 @@ namespace pm
 			return numValues;
 		}
 
-		InfInt getNumSubcombinations(const T& value) const;
+		InfInt getNumSubcombinations(const T& value) const; // Θ(1)
 
 		const std::vector<ValueRepresentation>& getValueRepresentations() const
 		{
@@ -44,7 +47,6 @@ namespace pm
 		}
 
 	private:
-
 		std::vector<ValueRepresentation> representations;
 		std::unordered_map<T, unsigned> indices;
 		unsigned numValues = 0u;
@@ -76,6 +78,39 @@ namespace pm
 		: representations(pr.representations), indices(pr.indices),
 		  numValues(pr.numValues), numCombinations(pr.numCombinations)
 	{
+	}
+
+	template <typename T>
+	bool PermutationRepresentation<T>::operator == (const PermutationRepresentation<T>& pr) const
+	{
+		if (representations.size() != pr.representations.size()
+		 || numValues != pr.numValues)
+		{
+			return false;
+		}
+
+		for (const auto& representation : representations)
+		{
+			const auto& iterator = pr.indices.find(representation.value);
+
+			if (iterator == pr.indices.end())
+			{
+				return false;
+			}
+
+			if (representation.count != pr.representations[iterator->second].count)
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	template <typename T>
+	bool PermutationRepresentation<T>::operator != (const PermutationRepresentation<T>& pr) const
+	{
+		return !(*this == pr);
 	}
 
 	template <typename T>
