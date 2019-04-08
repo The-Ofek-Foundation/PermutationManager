@@ -6,6 +6,7 @@
 #include "InfInt.hxx"
 
 #include <algorithm>
+#include <random>
 #include <stdexcept>
 #include <vector>
 
@@ -38,7 +39,8 @@ namespace pm
 		std::vector<T> getPermutation(InfInt index) const;
 
 		// Θ(num_values)
-		std::vector<T> getRandomPermutation() const;
+		template <typename RandomGenerator>
+		std::vector<T> getRandomPermutation(RandomGenerator&& generator) const;
 
 		// O(num_values * num_distinct_values) = Ω(num_values), O(num_values²)
 		InfInt getPermutationIndex(const std::vector<T>& permutation) const;
@@ -114,10 +116,11 @@ namespace pm
 	}
 
 	template <typename T>
-	std::vector<T> PermutationManager<T>::getRandomPermutation() const
+	template <typename RandomGenerator>
+	std::vector<T> PermutationManager<T>::getRandomPermutation(RandomGenerator&& generator) const
 	{
 		std::vector<T> permutation = getPermutation(0);
-		std::random_shuffle(permutation.begin(), permutation.end());
+		std::shuffle(permutation.begin(), permutation.end(), generator);
 		return permutation;
 	}
 
