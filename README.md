@@ -120,7 +120,7 @@ Here's where the heart of the matter is, how efficient is this really?
  - Getting a specific permutation given an index: **Ω(# values), O(# values * # distinct values)**
  - Getting an index given a specific permutation: **Ω(# values), O(# values * # distinct values)**
  - Get a random permutation: **Θ(# values)**
- - Get a number of distinct combinations: **Θ(1)**
+ - Get the number of distinct combinations: **Θ(1)**
 
 
 Note that for many use cases, the number of distinct values might be fixed. For example, for an essay limited to ASCII, there are only 256 possible characters. This means that an essay with 10 thousand words will only run for twice as long as an essay with 5 thousand words.
