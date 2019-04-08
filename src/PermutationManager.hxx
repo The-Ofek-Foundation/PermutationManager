@@ -27,8 +27,12 @@ namespace pm
 	class PermutationManager
 	{
 	public:
-		PermutationManager(const std::vector<T>& values); // Θ(num_values)
-		PermutationManager(const T* values, unsigned numValues); // Θ(num_values)
+		// Θ(num_values)
+		PermutationManager(const std::vector<T>& values);
+		PermutationManager(const T* values, unsigned numValues);
+		template <typename InputIterator>
+		PermutationManager(InputIterator first, InputIterator last);
+		PermutationManager(const PermutationManager& pm);
 
 		// O(num_values * num_distinct_values) = Ω(num_values), O(num_values²)
 		std::vector<T> getPermutation(InfInt index) const;
@@ -39,6 +43,8 @@ namespace pm
 		// O(num_values * num_distinct_values) = Ω(num_values), O(num_values²)
 		InfInt getPermutationIndex(const std::vector<T>& permutation) const;
 		InfInt getPermutationIndex(const T* values, unsigned numValues) const;
+		template <typename InputIterator>
+		InfInt getPermutationIndex(InputIterator first, InputIterator last) const;
 
 		inline InfInt getNumCombinations() const
 		{
@@ -58,6 +64,19 @@ namespace pm
 	template <typename T>
 	PermutationManager<T>::PermutationManager(const T* values, unsigned numValues)
 		: valuesRepresentation(values, numValues)
+	{
+	}
+
+	template <typename T>
+	template <typename InputIterator>
+	PermutationManager<T>::PermutationManager(InputIterator first, InputIterator last)
+		: valuesRepresentation(first, last)
+	{
+	}
+
+	template <typename T>
+	PermutationManager<T>::PermutationManager(const PermutationManager& pm)
+		: valuesRepresentation(pm.valuesRepresentation)
 	{
 	}
 
@@ -105,29 +124,25 @@ namespace pm
 	template <typename T>
 	InfInt PermutationManager<T>::getPermutationIndex(const std::vector<T>& permutation) const
 	{
-		return getPermutationIndex(&permutation[0u], permutation.size());
+		return getPermutationIndex(permutation.begin(), permutation.end());
 	}
 
 	template <typename T>
 	InfInt PermutationManager<T>::getPermutationIndex(const T* values, unsigned numValues) const
 	{
-		if (numValues != valuesRepresentation.getNumValues())
-		{
-			throw std::runtime_error("Incorrect permutation length");
-		}
+		return getPermutationIndex(&values[0u], &values[numValues]);
+	}
 
-		if (PermutationRepresentation<T>(values, numValues) != valuesRepresentation)
-		{
-			throw std::runtime_error("Not valid permutation");
-		}
-
-
+	template <typename T>
+	template <typename InputIterator>
+	InfInt PermutationManager<T>::getPermutationIndex(InputIterator first, InputIterator last) const
+	{
 		PermutationRepresentation<T> tempRep(valuesRepresentation);
 		InfInt permIndex = 0;
 
-		for (unsigned i = 0u; i < numValues; ++i)
+		for (; first != last; ++first)
 		{
-			const T& value = values[i];
+			const T& value = *first;
 
 			for (const auto& representation : tempRep.getValueRepresentations())
 			{

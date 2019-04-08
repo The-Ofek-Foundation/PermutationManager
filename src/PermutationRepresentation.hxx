@@ -21,6 +21,8 @@ namespace pm
 
 		PermutationRepresentation(const std::vector<T>& values); // Θ(num_values)
 		PermutationRepresentation(const T* values, unsigned numValues); // Θ(num_values)
+		template <typename InputIterator>
+		PermutationRepresentation(InputIterator first, InputIterator last); // Θ(num_values)
 		PermutationRepresentation(const PermutationRepresentation<T>& pr); // Θ(num_distinct_values)
 
 		bool operator == (const PermutationRepresentation<T>& pr) const;
@@ -55,17 +57,24 @@ namespace pm
 
 	template <typename T>
 	PermutationRepresentation<T>::PermutationRepresentation(const std::vector<T>& values)
-	    : PermutationRepresentation(&values[0u], values.size())
+	    : PermutationRepresentation(values.begin(), values.end())
 	{
 	}
 
 	template <typename T>
 	PermutationRepresentation<T>::PermutationRepresentation(const T* values, unsigned numValues)
+	    : PermutationRepresentation(&values[0u], &values[numValues])
+	{
+	}
+
+	template <typename T>
+	template <typename InputIterator>
+	PermutationRepresentation<T>::PermutationRepresentation(InputIterator first, InputIterator last)
 		: representations({}), indices({}), numValues(0u), numCombinations(1)
 	{
-		for (unsigned i = 0u; i < numValues; ++i)
+		for (; first != last; ++first)
 		{
-			addValue(values[i]);
+			addValue(*first);
 		}
 	}
 

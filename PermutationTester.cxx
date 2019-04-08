@@ -1,6 +1,4 @@
-#include "PermutationManager.hxx"
-
-#include "InfInt.hxx"
+#include "src/PermutationManager.hxx"
 
 #include <cstring>
 #include <iostream>
@@ -21,7 +19,7 @@ void printPermutation(const std::vector<T>& permutation)
 
 int main()
 {
-	PermutationManager<char> pm({'a', 'a', 'b', 'b', 'c'});
+	PermutationManager<char> pm({'a', 'a', 'b', 'c'});
 
 	std::cout << "Number of Unique Combinations: " << pm.getNumCombinations() << "\n";
 
@@ -40,7 +38,7 @@ int main()
 	}
 
 
-	PermutationManager<char> pm2("     ',?aaeeeffhijmmnorrssstuwyyy", strlen("     ',?aaeeeffhijmmnorrssstuwyyy"));
+	PermutationManager<char> pm2("     ',?aaeeeffhiJmmnorrssstuwyyy", strlen("     ',?aaeeeffhijmmnorrssstuwyyy"));
 
 	std::cout << "Number of Unique Combinations: " << pm2.getNumCombinations() << "\n";
 
@@ -50,12 +48,18 @@ int main()
 
 	std::cout << pm2.getPermutationIndex(permutation) << "\n";
 
-	InfInt spookyIndex = pm2.getPermutationIndex("my name is jeffrey, what's yours?", strlen("     ',?aaeeeffhijmmnorrssstuwyyy"));
+	InfInt spookyIndex = pm2.getPermutationIndex("my name is Jeffrey, what's yours?", strlen("     ',?aaeeeffhijmmnorrssstuwyyy"));
 
 	std::cout << spookyIndex << ": ";
 	printPermutation(pm2.getPermutation(spookyIndex));
 
 	printPermutation(pm2.getRandomPermutation());
+
+	std::vector<int> v = {-1, 2, -3, -3};
+	PermutationManager<int> pm3(v.begin(), v.end());
+
+	printPermutation(pm3.getPermutation(0u));
+	std::cout << pm3.getPermutationIndex({2, -1, -3, -3}) << "\n";
 
 	return 0;
 }
