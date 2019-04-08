@@ -31,9 +31,9 @@ namespace pm
 		void addValue(const T& value); // Θ(1)
 		void removeValue(const T& value); // Θ(1)
 
-		InfInt getNumCombinations() const
+		InfInt getNumPermutations() const
 		{
-			return numCombinations;
+			return numPermutations;
 		}
 
 		unsigned getNumValues() const
@@ -41,7 +41,7 @@ namespace pm
 			return numValues;
 		}
 
-		InfInt getNumSubcombinations(const T& value) const; // Θ(1)
+		InfInt getNumSubpermutations(const T& value) const; // Θ(1)
 
 		const std::vector<ValueRepresentation>& getValueRepresentations() const
 		{
@@ -52,7 +52,7 @@ namespace pm
 		std::vector<ValueRepresentation> representations;
 		std::unordered_map<T, unsigned> indices;
 		unsigned numValues = 0u;
-		InfInt numCombinations;
+		InfInt numPermutations;
 	};
 
 	template <typename T>
@@ -70,7 +70,7 @@ namespace pm
 	template <typename T>
 	template <typename InputIterator>
 	PermutationRepresentation<T>::PermutationRepresentation(InputIterator first, InputIterator last)
-		: representations({}), indices({}), numValues(0u), numCombinations(1)
+		: representations({}), indices({}), numValues(0u), numPermutations(1)
 	{
 		for (; first != last; ++first)
 		{
@@ -81,7 +81,7 @@ namespace pm
 	template <typename T>
 	PermutationRepresentation<T>::PermutationRepresentation(const PermutationRepresentation<T>& pr)
 		: representations(pr.representations), indices(pr.indices),
-		  numValues(pr.numValues), numCombinations(pr.numCombinations)
+		  numValues(pr.numValues), numPermutations(pr.numPermutations)
 	{
 	}
 
@@ -140,7 +140,7 @@ namespace pm
 
 		++numValues;
 
-		numCombinations = numCombinations * numValues / count;
+		numPermutations = numPermutations * numValues / count;
 	}
 
 	template <typename T>
@@ -153,14 +153,14 @@ namespace pm
 			throw std::runtime_error("Cannot remove value, already empty: " + value);
 		}
 
-		numCombinations = numCombinations * count / numValues;
+		numPermutations = numPermutations * count / numValues;
 
 		--count;
 		--numValues;
 	}
 
 	template <typename T>
-	InfInt PermutationRepresentation<T>::getNumSubcombinations(const T& value) const
+	InfInt PermutationRepresentation<T>::getNumSubpermutations(const T& value) const
 	{
 		unsigned count = representations[indices.at(value)].count;
 
@@ -169,7 +169,7 @@ namespace pm
 			return 0;
 		}
 
-		return numCombinations * count / numValues;
+		return numPermutations * count / numValues;
 	}
 }
 

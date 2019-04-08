@@ -23,16 +23,16 @@ int main()
 {
 	// PermutationManager<char> pm({'a', 'a', 'b', 'c'});
 
-	// std::cout << "Number of Unique Combinations: " << pm.getNumCombinations() << "\n";
+	// std::cout << "Number of Unique Permutations: " << pm.getNumPermutations() << "\n";
 
-	// for (InfInt i = 0; i < pm.getNumCombinations(); ++i)
+	// for (InfInt i = 0; i < pm.getNumPermutations(); ++i)
 	// {
 	// 	printPermutation(pm.getPermutation(i));
 	// }
 
 	// PermutationManager<int> pmInt({2, 1, 6, 7, 5, 9, 5, 0, 1, 4});
 
-	// std::cout << "Number of Unique Combinations: " << pmInt.getNumCombinations() << "\n";
+	// std::cout << "Number of Unique Permutations: " << pmInt.getNumPermutations() << "\n";
 
 	// for (InfInt i = 0; i < 10u; ++i)
 	// {
@@ -42,7 +42,7 @@ int main()
 
 	// PermutationManager<char> pm2("     ',?aaeeeffhiJmmnorrssstuwyyy", strlen("     ',?aaeeeffhijmmnorrssstuwyyy"));
 
-	// std::cout << "Number of Unique Combinations: " << pm2.getNumCombinations() << "\n";
+	// std::cout << "Number of Unique Permutations: " << pm2.getNumPermutations() << "\n";
 
 	// const auto& permutation = pm2.getPermutation(673498235uLL);
 
@@ -71,7 +71,7 @@ int main()
 	std::sort(sortedPlug.begin(), sortedPlug.end());
 
 	PermutationManager<char> pm(sortedPlug.begin(), sortedPlug.end());
-	std::cout << "Number of Unique Combinations:\n\t" << pm.getNumCombinations() << "\n\n";
+	std::cout << "Number of Unique Permutations:\n\t" << pm.getNumPermutations() << "\n\n";
 
 	InfInt shamelessPlugPermutationIndex = pm.getPermutationIndex(shamelessPlug.begin(), shamelessPlug.end());
 

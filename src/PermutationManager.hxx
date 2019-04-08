@@ -48,9 +48,9 @@ namespace pm
 		template <typename InputIterator>
 		InfInt getPermutationIndex(InputIterator first, InputIterator last) const;
 
-		inline InfInt getNumCombinations() const
+		inline InfInt getNumPermutations() const
 		{
-			return valuesRepresentation.getNumCombinations();
+			return valuesRepresentation.getNumPermutations();
 		}
 
 	private:
@@ -86,7 +86,7 @@ namespace pm
 	std::vector<T> PermutationManager<T>::getPermutation(InfInt permIndex) const
 	{
 		// verify permutation index is in range
-		if (permIndex < 0 || permIndex >= getNumCombinations())
+		if (permIndex < 0 || permIndex >= getNumPermutations())
 		{
 			throw std::runtime_error("Index out of range: " + permIndex.toString());
 		}
@@ -101,14 +101,14 @@ namespace pm
 		{
 			for (const auto& representation : tempRep.getValueRepresentations())
 			{
-				if (permIndex < tempRep.getNumSubcombinations(representation.value))
+				if (permIndex < tempRep.getNumSubpermutations(representation.value))
 				{
 					tempRep.removeValue(representation.value);
 					permutation[i] = representation.value;
 					break;
 				}
 
-				permIndex -= tempRep.getNumSubcombinations(representation.value);
+				permIndex -= tempRep.getNumSubpermutations(representation.value);
 			}
 		}
 
@@ -154,7 +154,7 @@ namespace pm
 					break;
 				}
 
-				permIndex += tempRep.getNumSubcombinations(representation.value);
+				permIndex += tempRep.getNumSubpermutations(representation.value);
 			}
 
 			tempRep.removeValue(value);

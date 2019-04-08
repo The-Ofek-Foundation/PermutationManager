@@ -64,7 +64,7 @@ InfInt getPermutationIndex(InputIterator first, InputIterator last);
 std::vector<T> getRandomPermutation(RandomGenerator&& generator);
 
 // get the total number of distinct permutations
-InfInt getNumCombinations();
+InfInt getNumPermutations();
 ```
 
 #### Example Usage:
@@ -85,7 +85,7 @@ std::string sortedPlug = shamelessPlug;
 std::sort(sortedPlug.begin(), sortedPlug.end());
 PermutationManager<char> pm(sortedPlug.begin(), sortedPlug.end());
 
-std::cout << "Number of Unique Combinations:\n\t" << pm.getNumCombinations() << "\n\n";
+std::cout << "Number of Unique Permutations:\n\t" << pm.getNumPermutations() << "\n\n";
 
 InfInt shamelessPlugPermutationIndex = pm.getPermutationIndex(shamelessPlug.begin(), shamelessPlug.end());
 
@@ -101,7 +101,7 @@ std::cout << "\n";
 
 Which outputs the following:
 ```
-Number of Unique Combinations:
+Number of Unique Permutations:
 	286085711893760574941932554490307792537822145936044875714756621975841562153542497906811500322138510013235200000000000000
 
 Index of Shameless Plug permutation:
@@ -120,7 +120,7 @@ Here's where the heart of the matter is, how efficient is this really?
  - Getting a specific permutation given an index: **Ω(# values), O(# values * # distinct values)**
  - Getting an index given a specific permutation: **Ω(# values), O(# values * # distinct values)**
  - Get a random permutation: **Θ(# values)**
- - Get the number of distinct combinations: **Θ(1)**
+ - Get the number of distinct permutations: **Θ(1)**
 
 
 Note that for many use cases, the number of distinct values might be fixed. For example, for an essay limited to ASCII, there are only 256 possible characters. This means that an essay with 10 thousand words will only run for twice as long as an essay with 5 thousand words.
