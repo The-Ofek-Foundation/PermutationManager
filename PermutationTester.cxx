@@ -21,68 +21,19 @@ void printPermutation(const std::vector<T>& permutation)
 
 int main()
 {
-	// PermutationManager<char> pm({'a', 'a', 'b', 'c'});
 
-	// std::cout << "Number of Unique Permutations: " << pm.getNumPermutations() << "\n";
+	std::string myStr = "            !'Raaaaaaaaccddeeeeeeegghhiiijkmmnnnoooprssssstttuuvvw";
 
-	// for (InfInt i = 0; i < pm.getNumPermutations(); ++i)
-	// {
-	// 	printPermutation(pm.getPermutation(i));
-	// }
-
-	// PermutationManager<int> pmInt({2, 1, 6, 7, 5, 9, 5, 0, 1, 4});
-
-	// std::cout << "Number of Unique Permutations: " << pmInt.getNumPermutations() << "\n";
-
-	// for (InfInt i = 0; i < 10u; ++i)
-	// {
-	// 	printPermutation(pmInt.getPermutation(i));
-	// }
+	PermutationManager<char> pm(myStr.begin(), myStr.end());
 
 
-	// PermutationManager<char> pm2("     ',?aaeeeffhiJmmnorrssstuwyyy", strlen("     ',?aaeeeffhijmmnorrssstuwyyy"));
+	printPermutation(pm.getPermutation("60777544677604899641470067442790386864247604236308303175748360083677"));
 
-	// std::cout << "Number of Unique Permutations: " << pm2.getNumPermutations() << "\n";
+	// std::cout << "Number of distinct permutations:\n\t" << pm.getNumPermutations() << "\n";
 
-	// const auto& permutation = pm2.getPermutation(673498235uLL);
+	// InfInt index = pm.getPermutationIndex("Raghav is awesome and just gave me a cookie and that's super nice!", myStr.size());
 
-	// printPermutation(permutation);
-
-	// std::cout << pm2.getPermutationIndex(permutation) << "\n";
-
-	// InfInt spookyIndex = pm2.getPermutationIndex("my name is Jeffrey, what's yours?", strlen("     ',?aaeeeffhijmmnorrssstuwyyy"));
-
-	// std::cout << spookyIndex << ": ";
-	// printPermutation(pm2.getPermutation(spookyIndex));
-
-	// std::random_device rd;
-	// std::mt19937 g(rd());
-
-	// printPermutation(pm2.getRandomPermutation(g));
-
-	// std::vector<int> v = {-1, 2, -3, -3};
-	// PermutationManager<int> pm3(v.begin(), v.end());
-
-	// printPermutation(pm3.getPermutation(0u));
-	// std::cout << pm3.getPermutationIndex({2, -1, -3, -3}) << "\n";
-
-	std::string shamelessPlug = "Ofek Gila's website is theofekfoundation.org and you can contact him at webmaster@theofekfoundation.org.";
-	std::string sortedPlug = shamelessPlug;
-	std::sort(sortedPlug.begin(), sortedPlug.end());
-
-	PermutationManager<char> pm(sortedPlug.begin(), sortedPlug.end());
-	std::cout << "Number of Unique Permutations:\n\t" << pm.getNumPermutations() << "\n\n";
-
-	InfInt shamelessPlugPermutationIndex = pm.getPermutationIndex(shamelessPlug.begin(), shamelessPlug.end());
-
-	std::cout << "Index of Shameless Plug permutation:\n\t" << shamelessPlugPermutationIndex << "\n\n";
-
-	std::cout << "Verify Permutation:\n\t";
-	for (char c : pm.getPermutation(shamelessPlugPermutationIndex))
-	{
-		std::cout << c;
-	}
-	std::cout << "\n\n";
+	// std::cout << "Specific Permutation #:\n\t" << index << "\n";
 
 	return 0;
 }

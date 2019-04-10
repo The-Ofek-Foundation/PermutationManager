@@ -127,6 +127,8 @@ Note that for many use cases, the number of distinct values might be fixed. For 
 
 In other words, for a fixed number of possible distinct values, both the latter permutations run in: **Θ(# values)**
 
-In any case, the first permutation (index 0), runs in Θ(# values) time for both getting the permutation or reverse-getting the index due to the nature of this algorithm. This is how getting a random permutation is always **Θ(# values)**.
+In any case, the first permutation (index 0), runs in **Θ(# values)** time for both getting the permutation or reverse-getting the index due to the nature of this algorithm. This is how getting a random permutation is always **Θ(# values)**. On the flip side, the last permutation always runs in **Θ(# values * # distinct values)** (the worst case). As mentioned previously, if you have a fixed number of possible values, this still drops to **Θ(# values)**.
+
+
 
 [InfInt Link]: https://github.com/sercantutar/infint/blob/master/InfInt.h "InfInt source code"
